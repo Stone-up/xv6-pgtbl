@@ -1,0 +1,4 @@
+1. getppid() getuid() geteuid() getgid() getegid()
+getppid返回当前进程的父进程ID；getuid返回当前进程的实际用户ID；geteuid返回当前用户的有效用户ID；getgid返回当前进程的实际用户组ID；getegid返回当前用户的有效用户组ID
+2. page0-0-0是程序的代码段，page0-0-1是程序的数据段; page0-0-3是用户栈; page0-0-4是guard page；page255-511-509是堆
+

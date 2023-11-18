@@ -75,7 +75,30 @@ int
 sys_pgaccess(void)
 {
   // lab pgtbl: your code here.
-  return 0;
+  uint64 va, mask, procmask = 0;
+  int num;
+  const int maxnum = 64;
+  argaddr(0, &va);
+  argint(1, &num);
+  argaddr(2, &mask);
+  pagetable_t pte;
+  if(num > maxnum)
+  {
+    num = maxnum;
+    return -1;
+  }
+  for(int i = 0; i < num; i++)
+  {
+    pte = walk(myproc()->pagetable, va + (i * PGSIZE), 0);
+    if((*pte & PTE_A) > 0)
+    {
+      procmask |= (1 << i);
+      *pte = (*pte & (~PTE_A));
+    }
+  } 
+  return copyout(myproc()->pagetable, mask, (char*)&procmask, sizeof(uint64));
+
+
 }
 #endif
 
